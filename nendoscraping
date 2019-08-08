@@ -3,7 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-from twitterscrap import tweetscrape
+
 
 #ask for target
 choice = input("input choice \n1: scrape mikatan blog \n2: input scrape target \nENTER: hit enter to scrape recent tweet from @figure_alt with keyword カホタン and ねんどろ")
@@ -17,11 +17,13 @@ elif choice =="2":
         print("nothing input")
         quit()
 else:
+    from twitterscrap import tweetscrape
     bloglink = tweetscrape()
 
 #status 200 = good
 page = requests.get(bloglink)
 print("Response of page status code " + str(page.status_code))
+print('status 200 is good')
 print("-------------------------------------")
 
 soup = BeautifulSoup(page.content, "lxml")
