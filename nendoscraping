@@ -3,11 +3,21 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+from twitterscrap import tweetscrape
 
 #ask for target
-bloglink = input("input download target or hit enter for default")
-if bloglink =="":
+choice = input("input choice \n1: scrape mikatan blog \n2: input scrape target \nENTER: hit enter to scrape recent tweet from @figure_alt with keyword カホタン and ねんどろ")
+
+if choice =="1":
     bloglink="https://ameblo.jp/gsc-mikatan/"
+elif choice =="2":
+    bloglink = input("input download target or hit enter for default")
+    if bloglink == "":
+        print('-------------')
+        print("nothing input")
+        quit()
+else:
+    bloglink = tweetscrape()
 
 #status 200 = good
 page = requests.get(bloglink)
