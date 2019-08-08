@@ -38,9 +38,10 @@ for s in imagelist:
 #download appendix for no reason
 j = 0
 
+#remember to change directory
 for k in imagelistcorrected:
     picture_request = requests.get(k)
-    #download 
+    #download
     with open("C:\\Users\\Belun\\Downloads\\temp\\" + str(j) + k[-13:], 'wb') as f:
          f.write(picture_request.content)
     j=j+1
