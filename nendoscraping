@@ -1,0 +1,53 @@
+#python3
+
+import requests
+from bs4 import BeautifulSoup
+import re
+
+#ask for target
+bloglink = input("input download target or hit enter for default")
+if bloglink =="":
+    bloglink="https://ameblo.jp/gsc-mikatan/"
+
+#status 200 = good
+page = requests.get(bloglink)
+print("Response of page status code " + str(page.status_code))
+print("-------------------------------------")
+
+soup = BeautifulSoup(page.content, "lxml")
+imagelist = []
+imagelistcorrected = []
+
+for a in soup.find_all("a" , href=True):
+    if re.findall(r".+(?=jpg|png|jpeg)",a['href']):
+    # find out if the url contain jpg or png or jpeg , if not return a empty list. empty list is False
+        #print(a['href'])
+        imagelist.append(a['href'])
+
+#print list to verify
+imagelist.sort()
+print(imagelist)
+
+
+keyword = input('enter keyword shown in picture link to sort for download or hit ENTER for no sort \n')
+#sort for keyword only, others not downloaded.
+for s in imagelist:
+    if str(keyword) in s:
+        imagelistcorrected.append(s)
+
+#download appendix for no reason
+j = 0
+
+for k in imagelistcorrected:
+    picture_request = requests.get(k)
+    #download 
+    with open("C:\\Users\\Belun\\Downloads\\temp\\" + str(j) + k[-13:], 'wb') as f:
+         f.write(picture_request.content)
+    j=j+1
+    print(k + " downloaded")
+
+print('--------------------------')
+print('download done')
+
+
+
